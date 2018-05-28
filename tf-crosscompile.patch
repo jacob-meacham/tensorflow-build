@@ -86,33 +86,33 @@ index 000000000..e5d8cc384
 +  ],
 +)
 diff --git a/WORKSPACE b/WORKSPACE
-index e0931512f..5b7152a67 100644
+index b7a469d..859ad74 100644
 --- a/WORKSPACE
 +++ b/WORKSPACE
-@@ -7,6 +7,12 @@ closure_repositories()
-
+@@ -18,6 +18,12 @@ android_ndk_repository(
  load("//tensorflow:workspace.bzl", "tf_workspace")
+ tf_workspace()
 
 +new_local_repository(
 +    name = "arm_compiler",
-+    path = "%%CT_ROOT_DIR%%",
++    path = "/usr",
 +    build_file = "BUILD.arm_compiler",
 +)
 +
- # Uncomment and update the paths in these entries to build the Android demo.
- #android_sdk_repository(
- #    name = "androidsdk",
+ # Specify the minimum required bazel version.
+ load("//tensorflow:tensorflow.bzl", "check_version")
+ check_version("0.2.0")
 diff --git a/tensorflow/core/platform/platform.h b/tensorflow/core/platform/platform.h
 index 55d7954f3..ccebaf343 100644
 --- a/tensorflow/core/platform/platform.h
 +++ b/tensorflow/core/platform/platform.h
 @@ -45,7 +45,7 @@ limitations under the License.
- 
+
  // Since there's no macro for the Raspberry Pi, assume we're on a mobile
  // platform if we're compiling for the ARM CPU.
 -#define IS_MOBILE_PLATFORM
 +//#define IS_MOBILE_PLATFORM
- 
+
  #else
  // If no platform specified, use:
 diff --git a/tools/arm_compiler/BUILD b/tools/arm_compiler/BUILD
@@ -254,8 +254,8 @@ index 000000000..3ff006da8
 +  cxx_builtin_include_directory: "%%CT_ROOT_DIR%%/%%CT_NAME%%/libc/usr/include/"
 +  cxx_builtin_include_directory: "%%CT_ROOT_DIR%%/lib/gcc/%%CT_NAME%%/%%CT_GCC_VERSION%%/include"
 +  cxx_builtin_include_directory: "%%CT_ROOT_DIR%%/lib/gcc/%%CT_NAME%%/%%CT_GCC_VERSION%%/include-fixed"
-+  
-+  cxx_flag: "-std=c++11"	
++
++  cxx_flag: "-std=c++11"
 +  linker_flag: "-lstdc++"
 +
 +  unfiltered_cxx_flag: "-Wno-builtin-macro-redefined"
