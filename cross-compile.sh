@@ -45,5 +45,5 @@ PATCH_NAME=tf-crosscompile-$CT_NAME.patch
 
 echo "launching bazel with flags '$BAZEL_FLAGS'"
 
+/usr/local/bin/bazel build $BAZEL_FLAGS -c opt --copt="-mcpu=cortex-a7" --copt="-mfloat-abi=softfp" --copt="-ftree-vectorize" tensorflow:libtensorflow_cc.so --cpu=armeabi --crosstool_top=//tools/arm_compiler:toolchain --verbose_failures
 #/usr/local/bin/bazel build $BAZEL_FLAGS -c opt --copt="-mcpu=cortex-a7" --copt="-mfpu=neon-vfpv4" --copt="-mfloat-abi=softfp" --copt="-ftree-vectorize" tensorflow:libtensorflow.so --cpu=armeabi --crosstool_top=//tools/arm_compiler:toolchain --verbose_failures
-/usr/local/bin/bazel build $BAZEL_FLAGS -c opt --copt="-mcpu=cortex-a7" --copt="-mfloat-abi=softfp" --copt="-ftree-vectorize" tensorflow:libtensorflow.so --cpu=armeabi --crosstool_top=//tools/arm_compiler:toolchain --verbose_failures
